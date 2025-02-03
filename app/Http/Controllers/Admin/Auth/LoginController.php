@@ -14,16 +14,18 @@ class LoginController extends Controller
     }
 
 public function authenticate(Request $request){
-    $credentials = $request->only('email', 'password', 'remember');
+    $credentials = $request->only('email', 'password');
 
     $validator = $this->validator($credentials);
+
+    $remember = $request->input('remember', false);
 
     if($validator->fails()){
         return redirect()->route('admin.login')
         ->withErrors($validator)
         ->withInput();
     }
-    if(Auth::attempt($credentials)){
+    if(Auth::attempt($credentials, $remember)){
         return redirect()->route('admin.home');
     }
     $validator->errors()->add('password', 'Email e/ou senha inválidos');

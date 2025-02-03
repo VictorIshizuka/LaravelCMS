@@ -23,13 +23,13 @@ class RegisterController extends Controller
     public function register(Request $request)
     {
         $data = $request->only(['name', 'email', 'password', 'password_confirmation']);
-      $validator =  $this->validator($data);
+        $validator =  $this->validator($data);
 
-      if(!$validator->fails()) {
-          return redirect()->route('admin.register')
-          ->withErrors($validator )
-          ->withInput();
-      }
+        if ($validator->fails()) {
+            return redirect()->route('admin.register')
+                ->withErrors($validator)
+                ->withInput();
+        }
 
         $user = $this->create($data);
 
