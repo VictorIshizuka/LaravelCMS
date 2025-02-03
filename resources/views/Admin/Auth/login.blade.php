@@ -1,1 +1,3 @@
-area login
+@extends('adminlte::auth.login')
+
+@section('title', 'Login')

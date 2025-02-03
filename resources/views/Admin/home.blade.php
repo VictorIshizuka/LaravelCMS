@@ -1,2 +1,2 @@
-pagina inicial
+@extends('adminlte::page')
 
