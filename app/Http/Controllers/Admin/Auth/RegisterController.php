@@ -13,11 +13,11 @@ use Illuminate\Support\Facades\Auth;
 class RegisterController extends Controller
 {
 
-    protected $redirectTo = '/admin';
+    protected $redirectTo = '/painel';
 
     public function index()
     {
-        return view('admin.auth.register');
+        return view('admin.register');
     }
 
     public function register(Request $request)
@@ -26,7 +26,7 @@ class RegisterController extends Controller
         $validator =  $this->validator($data);
 
         if ($validator->fails()) {
-            return redirect()->route('admin.register')
+            return redirect()->route('painel.register')
                 ->withErrors($validator)
                 ->withInput();
         }
@@ -35,7 +35,7 @@ class RegisterController extends Controller
 
         Auth::login($user);
 
-        return redirect()->route('admin.home');
+        return redirect()->route('painel.home');
     }
 
     protected function validator(array $data)

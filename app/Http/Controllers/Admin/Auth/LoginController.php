@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Validator;
 class LoginController extends Controller
 {
     public function index(){
-        return view('admin.auth.login');
+        return view('admin.login');
     }
 
 public function authenticate(Request $request){
@@ -21,15 +21,15 @@ public function authenticate(Request $request){
     $remember = $request->input('remember', false);
 
     if($validator->fails()){
-        return redirect()->route('admin.login')
+        return redirect()->route('painel.login')
         ->withErrors($validator)
         ->withInput();
     }
     if(Auth::attempt($credentials, $remember)){
-        return redirect()->route('admin.home');
+        return redirect()->route('painel.home');
     }
     $validator->errors()->add('password', 'Email e/ou senha inválidos');
-    return redirect()->route('admin.login')
+    return redirect()->route('painel.login')
     ->withInput()
     ->withErrors($validator);
     // ->with('error', 'Email ou senha inválidos');
@@ -37,7 +37,7 @@ public function authenticate(Request $request){
 
     public function logout(){
         Auth::logout();
-        return redirect()->route('admin.login');
+        return redirect()->route('painel.login');
     }
 
     protected function validator(array $data)

@@ -23,10 +23,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         RedirectIfAuthenticated::redirectUsing(function (){
-            return route('admin.home');
+            return route('painel.home');
         });
         Authenticate::redirectUsing(function (){
-            return route('admin.login');
+            return route('painel.login');
         });
     }
 }
