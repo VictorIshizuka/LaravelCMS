@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\Auth\RegisterController;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\SettingController;
 use \App\Http\Controllers\Site\HomeController as SiteHomeController;
 
 
@@ -41,6 +42,15 @@ Route::prefix('painel')->name('painel.')->group(function () {
 
         // Rota para logout
         Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+
+        Route::prefix('settings')->name('settings.')->group(function () {
+
+            //Rotas para configuração
+            Route::controller(SettingController::class)->group(function () {
+                Route::get('/', 'index')->name('index');
+                Route::put('save', 'save')->name('save');
+            });
+        });
 
         Route::middleware(['admin', 'can:admin'])->group(function () {
             //Rotas para usuários
