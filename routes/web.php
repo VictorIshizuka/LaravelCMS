@@ -41,14 +41,16 @@ Route::prefix('painel')->name('painel.')->group(function () {
         Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
         //Rotas para usuários
-        Route::prefix('users')->name('users.')->group(function () {
-            Route::controller(UserController::class)->group(function () {
-                Route::get('/', 'index')->name('list');
-                Route::get('create', 'create')->name('create');
-                Route::post('/', 'store')->name('store');
-                Route::get('edit/{id}', 'edit')->name('edit');
-                Route::put('edit/{id}', 'update')->name('update');
-                Route::delete('delete/{id}', 'destroy')->name('delete');
+        Route::middleware(['admin','can:admin'])->group(function () {
+            Route::prefix('users')->name('users.')->group(function () {
+                Route::controller(UserController::class)->group(function () {
+                    Route::get('/', 'index')->name('list');
+                    Route::get('create', 'create')->name('create');
+                    Route::post('/', 'store')->name('store');
+                    Route::get('edit/{id}', 'edit')->name('edit');
+                    Route::put('edit/{id}', 'update')->name('update');
+                    Route::delete('delete/{id}', 'destroy')->name('delete');
+                });
             });
         });
     });

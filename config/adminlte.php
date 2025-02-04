@@ -337,7 +337,8 @@ return [
         [
             'text' => 'Meus usuários',
             'url' => 'painel/users',
-            'icon' => 'far fa-fw fa-file'
+            'icon' => 'far fa-fw fa-file',
+            'can' => 'admin',
             // 'label' => 4,
             // 'label_color' => 'success',
         ],
