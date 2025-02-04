@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\PageController;
 use \App\Http\Controllers\Site\HomeController as SiteHomeController;
 
 
@@ -52,6 +53,19 @@ Route::prefix('painel')->name('painel.')->group(function () {
             });
         });
 
+        Route::prefix('pages')->name('pages.')->group(function () {
+
+            //Rotas para páginas
+            Route::controller(PageController::class)->group(function () {
+                Route::get('/', 'index')->name('index');
+                Route::get('create', 'create')->name('create'); 
+                Route::post('/', 'store')->name('store');
+                Route::get('edit/{id}', 'edit')->name('edit');
+                Route::put('edit/{id}', 'update')->name('update');
+                Route::delete('delete/{id}', 'destroy')->name('delete');
+            });
+        });
+
         Route::middleware(['admin', 'can:admin'])->group(function () {
             //Rotas para usuários
             Route::prefix('users')->name('users.')->group(function () {
@@ -64,9 +78,9 @@ Route::prefix('painel')->name('painel.')->group(function () {
                     Route::delete('delete/{id}', 'destroy')->name('delete');
                 });
             });
-            //Rotas para perfil
-            Route::get('profile', [ProfileController::class, 'index'])->name('profile');
-            Route::put('profile-update', [ProfileController::class, 'update'])->name('profile.update');
         });
+        //Rotas para perfil
+        Route::get('profile', [ProfileController::class, 'index'])->name('profile');
+        Route::put('profile-update', [ProfileController::class, 'update'])->name('profile.update');
     });
 });

@@ -26,8 +26,8 @@
         </div>
     @endif
 
-    <div class="container d-flex justify-content-center">
-        <form action="{{ route('painel.settings.save') }}" method="POST" class="w-75">
+    <div class="d-flex justify-content-center">
+        <form action="{{ route('painel.settings.save') }}" method="POST"  class="form-horizontal col-sm-6" >
             @csrf
             @method('PUT')
             <div class="card mx-auto">

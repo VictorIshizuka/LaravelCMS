@@ -3,8 +3,9 @@
 @section('title', 'Usuários')
 
 @section('content_header')
-    <h1>Usuários</h1>
-    <a href="{{ route('painel.users.create') }}" class="btn btn-success">Novo Usuário</a>
+    <h1>Usuários
+        <a href="{{ route('painel.users.create') }}" class="btn btn-sm btn-success">Novo Usuário</a>
+    </h1>
 @endsection
 
 @section('content')

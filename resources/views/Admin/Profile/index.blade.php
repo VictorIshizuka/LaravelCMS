@@ -26,11 +26,12 @@
         </div>
     @endif
 
-        <div class="d-flex justify-content-center">
-            <form action="{{ route('painel.profile.update') }}" method="POST" class="form-horizontal col-sm-6">
-                @csrf
-                @method('PUT')
-                <input type="hidden" name="id" value="{{ $user->id }}">
+    <div class="d-flex justify-content-center">
+        <form action="{{ route('painel.profile.update') }}" method="POST" class="form-horizontal col-sm-6">
+            @csrf
+            @method('PUT')
+            <input type="hidden" name="id" value="{{ $user->id }}">
+            <div class="card">
                 <div class="card-body">
                     <div class="form-group row">
                         <label for="name" class="col-sm-2 col-form-label">Nome:</label>
@@ -66,6 +67,7 @@
                 <div class="card-footer">
                     <button type="submit" class="btn btn-success">Atualizar</button>
                 </div>
-            </form>
-        </div>
-    @endsection
+            </div>
+        </form>
+    </div>
+@endsection
