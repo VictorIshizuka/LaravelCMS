@@ -47,8 +47,8 @@ Route::prefix('painel')->name('painel.')->group(function () {
                 Route::get('create', 'create')->name('create');
                 Route::post('/', 'store')->name('store');
                 Route::get('edit/{id}', 'edit')->name('edit');
-                Route::post('edit/{id}', 'update')->name('update');
-                Route::get('delete/{id}', 'destroy')->name('delete');
+                Route::put('edit/{id}', 'update')->name('update');
+                Route::delete('delete/{id}', 'destroy')->name('delete');
             });
         });
     });

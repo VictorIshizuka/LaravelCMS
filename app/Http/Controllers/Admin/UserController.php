@@ -7,15 +7,17 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
     public function index()
     {
 
-        $users = User::all();
+        $users = User::paginate(2);
+        $loggedId = Auth::id();
 
-        return view('admin.users.index', ['users' => $users]);
+        return view('admin.users.index', ['users' => $users, 'loggedId' => $loggedId]);
     }
 
     public function create()
@@ -68,33 +70,53 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
 
-        $data = $request->all();
-        $validator =  Validator::make($data, [
+        $data = $request->only(['name', 'email', 'password', 'password_confirmation']);
+
+        $validator =  Validator::make(['name' => $data['name'], 'email' => $data['email']], [
             'name' => ['required', 'string', 'max:100'],
-            'email' => ['required', 'string', 'email', 'max:100', 'unique:users'],
-            'password' => ['nullable', 'string', 'min:4', 'confirmed'],
+            'email' => ['required', 'string', 'email', 'max:100']
         ]);
 
-        if ($validator->fails()) {
-            return redirect()->route('painel.users.edit')
-                ->withErrors($validator)
-                ->withInput();
-        }
-
         $user = User::find($id);
-        $user->name = $request->name;
-        $user->email = $request->email;
-        if ($request->password !== null) {
-            $user->password = Hash::make($request->password);
+
+        if ($user) {
+            $user->name = $request->name;
+            if ($user->email !== $data['email']) {
+                $hasEmail = User::where('email',  $data['email'])->first();
+                if ($hasEmail) {
+                    $validator->errors()->add('email', __('validation.unique', ['email' => $data['email']]));
+                } else {
+                    $user->email = $data['email'];
+                }
+            }
+            if (!empty($data['password'])) {
+                if (strlen($data['password']) < 4) {
+                    $validator->errors()->add('password', __('validation.min.string', ['attribute' => 'password', 'min' => 4]));
+                }
+
+                if ($data['password'] !== $data['password_confirmation']) {
+                    $validator->errors()->add('password', __('validation.confirmed', ['attribute' => 'password']));
+                }
+
+                if (count($validator->errors()) > 0) {
+                    return redirect()->route('painel.users.edit', ['id' => $id])
+                        ->withErrors($validator)->withInput();
+                }
+
+                $user->password = Hash::make($data['password']);
+            }
+            $user->save();
         }
-        $user->save();
         return redirect()->route('painel.users.list');
     }
 
     public function destroy($id)
     {
-        $user = User::find($id);
-        $user->delete();
+        $loggedId = Auth::id();
+        if($loggedId != $id){
+            $user = User::find($id);
+            $user->delete();
+        }
         return redirect()->route('painel.users.list');
     }
 }
