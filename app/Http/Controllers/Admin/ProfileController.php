@@ -63,6 +63,8 @@ class ProfileController extends Controller
                 $user->password = Hash::make($data['password']);
             }
             $user->save();
+            return redirect()->route('painel.profile')->with('success', 'Perfil atualizado com sucesso!');
+
         }
         return redirect()->route('painel.profile');
     }
