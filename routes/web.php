@@ -5,7 +5,9 @@ use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\Auth\RegisterController;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\ProfileController;
 use \App\Http\Controllers\Site\HomeController as SiteHomeController;
+
 
 // Rota principal
 Route::get('/', [SiteHomeController::class, 'index'])->name('site.home');
@@ -40,8 +42,8 @@ Route::prefix('painel')->name('painel.')->group(function () {
         // Rota para logout
         Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
-        //Rotas para usuários
-        Route::middleware(['admin','can:admin'])->group(function () {
+        Route::middleware(['admin', 'can:admin'])->group(function () {
+            //Rotas para usuários
             Route::prefix('users')->name('users.')->group(function () {
                 Route::controller(UserController::class)->group(function () {
                     Route::get('/', 'index')->name('list');
@@ -52,6 +54,9 @@ Route::prefix('painel')->name('painel.')->group(function () {
                     Route::delete('delete/{id}', 'destroy')->name('delete');
                 });
             });
+            //Rotas para perfil
+            Route::get('profile', [ProfileController::class, 'index'])->name('profile');
+            Route::put('profile-update', [ProfileController::class, 'update'])->name('profile.update');
         });
     });
 });

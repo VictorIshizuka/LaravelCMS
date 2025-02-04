@@ -342,10 +342,15 @@ return [
             // 'label' => 4,
             // 'label_color' => 'success',
         ],
-        ['header' => 'account_settings'],
+        ['header' => 'Configurações'],
+        [
+            'text' => 'Congifurações do site',
+            'url' => 'painel/settings',
+            'icon' => 'fas fa-fw fa-file',
+        ],
         [
             'text' => 'profile',
-            'url' => 'painel/settings',
+            'url' => 'painel/profile',
             'icon' => 'fas fa-fw fa-user',
         ],
     //     [

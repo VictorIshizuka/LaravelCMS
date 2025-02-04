@@ -112,8 +112,8 @@ class UserController extends Controller
 
     public function destroy($id)
     {
-        $loggedId = Auth::id();
-        if($loggedId != $id){
+        $loggedId = intval(Auth::id());
+        if ($loggedId !== $id) {
             $user = User::find($id);
             $user->delete();
         }
