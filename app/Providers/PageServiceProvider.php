@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 use App\Models\Page;
+use App\Models\Setting;
 
 class PageServiceProvider extends ServiceProvider
 {
@@ -21,6 +22,7 @@ class PageServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        //menus
         $frontMenu = [
             '/' => 'home'
         ];
@@ -31,5 +33,14 @@ class PageServiceProvider extends ServiceProvider
         }
 
         View::share('front_menu', $frontMenu);
+
+        //configuracoes
+        $config = [];
+        $settings = Setting::all();
+        foreach ($settings as $setting) {
+            $config[$setting->name] = $setting->content;
+        }
+
+        View::share('config', $config);
     }
 }
