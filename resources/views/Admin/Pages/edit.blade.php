@@ -53,7 +53,7 @@
 
     <script>
         tinymce.init({
-            selector: 'textarea',
+            selector: 'textarea.contentfield',
             plugins: [
                 'link', 'table', 'image', 'autosize', 'lists'
             ],

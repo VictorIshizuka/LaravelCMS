@@ -42,4 +42,36 @@
             </div>
         </form>
     </div>
+    <script src="https://cdn.tiny.cloud/1/2talidxctcgat2w23j1265egr8tlkoh6397px10om5hvhhw2/tinymce/7/tinymce.min.js"
+    referrerpolicy="origin"></script>
+
+<script>
+    tinymce.init({
+        selector: 'textarea.contentfield',
+        plugins: [
+            'link', 'table', 'image', 'autosize', 'lists'
+        ],
+        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | spellcheckdialog a11ycheck typography | aligncenter alignleft alignright alignjustify | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+        content_css: [
+            '{{ asset('assets/css/content.css') }}'
+        ],
+        images_upload_url: "/api/imageupload",
+        images_upload_credentials: true, //usaurio precisa estar logado
+        convert_urls: false, //evitar caminho relativo dos arquivos
+
+        // tinycomments_mode: 'embedded',
+        // tinycomments_author: 'Author name',
+        // mergetags_list: [{
+        //         value: 'First.Name',
+        //         title: 'First Name'
+        //     },
+        //     {
+        //         value: 'Email',
+        //         title: 'Email'
+        //     },
+        // ],
+        // ai_request: (request, respondWith) => respondWith.string(() => Promise.reject(
+        //     'See docs to implement AI Assistant')),
+    });
+</script>
 @endsection

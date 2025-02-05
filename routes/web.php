@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\PageController;
 use \App\Http\Controllers\Site\HomeController as SiteHomeController;
+use \App\Http\Controllers\Site\PageController as SitePageController;
 
 
 // Rota principal
@@ -84,3 +85,6 @@ Route::prefix('painel')->name('painel.')->group(function () {
         Route::put('profile-update', [ProfileController::class, 'update'])->name('profile.update');
     });
 });
+
+
+Route::fallback([SitePageController::class, 'index']);
