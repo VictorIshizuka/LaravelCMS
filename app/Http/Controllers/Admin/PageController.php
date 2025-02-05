@@ -65,7 +65,7 @@ class PageController extends Controller
         if ($page) {
             $data = $request->only(['title', 'content']);
 
-            if ($page['slug'] != $data['title']) {
+            if ($page['title'] != $data['title']) {
                 $data['slug'] = Str::slug($data['title'], '-');
 
                 $validator = Validator::make($data, [
@@ -86,9 +86,9 @@ class PageController extends Controller
                     ->withErrors($validator)
                     ->withInput();
             }
+
             $page->title = $data['title'];
             $page->content = $data['content'];
-
             if (!empty($data['slug'])) {
                 $page->slug = $data['slug'];
             }
